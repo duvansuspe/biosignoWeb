@@ -1,0 +1,568 @@
+body {
+    font-family: Arial !important;
+    color: #4d4d4d !important;
+    font-size: 11px;
+    padding: 0 !important;
+}
+.ui-datepicker-year{
+    padding: 3px 10px 4px 10px !important;
+}
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1.0em !important;
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent url("../../iconos/flechaCombo.png") no-repeat 95% !important;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 30px;
+    padding: 6px 12px;
+}
+.control {
+    font-family: arial;
+    display: block;
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    cursor: pointer;
+    font-size: 19px;
+}
+.control input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+.control_indicator {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    height: 20px;
+    width: 21px;
+    background: #cccccc;
+    border: 3px solid #cccccc;
+    border-radius: 3px;
+}
+.control:hover input ~ .control_indicator,
+.control input:focus ~ .control_indicator {
+    background: #cccccc;
+}
+
+.control input:checked ~ .control_indicator {
+    background: #213b87;
+}
+.control:hover input:not([disabled]):checked ~ .control_indicator,
+.control input:checked:focus ~ .control_indicator {
+    background: #213b87;
+}
+.control input:disabled ~ .control_indicator {
+    background: #e6e6e6;
+    opacity: 3;
+    pointer-events: none;
+}
+
+@keyframes s-ripple {
+    0% {
+        transform: scale(0);
+    }
+    20% {
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+@keyframes s-ripple-dup {
+    0% {
+        transform: scale(0);
+    }
+    30% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+.oculto {
+    display: none;
+}
+
+.spinner {
+    position: fixed;
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
+    z-index: 1200;
+    background: #fff;
+    display:none;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    text-align:center;
+}
+.spinner-msg {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: #4d4d4d;
+}
+
+.spinner-img {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto;
+}
+
+.cursorPoint {
+    cursor: pointer;
+}
+
+hr {
+    height: 0px !important;
+}
+
+span > label {
+    font-weight: normal;
+    margin-bottom: 0px;
+}
+
+
+@media(max-width:1000px) {
+    input {
+        font-size: 11px !important;
+    }
+}
+
+@media(max-width:800px) {
+    label > select {
+        width: 47px !important;
+    }
+}
+
+@media(min-width:1600px) {
+    label > select {
+        width: 47px !important;
+    }
+}
+
+input {
+    font-size: 11px !important;
+}
+
+.heiCaja {
+    height: 30px;
+}
+
+#tablaValidacionIdentidad_processing {
+    background-color: #337AB7;
+    color: #FFFFFF;
+    border-radius: 20px;
+    font-weight: bold;
+}
+/*/////////editado*/
+table{
+    color: #4d4d4d !important;
+}
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar.active {
+    margin-left: -320px;
+}
+
+#sidebar {
+    min-width: 320px;
+    max-width: 320px;
+    height: calc(100vh - 89px);
+}
+
+#sidebar {
+    background: #ececec;
+    transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+    padding: 0 0 15px 0;
+    background: #213b87;
+}
+
+
+#cpOpcPDF.active {
+    margin-left: -320px;
+    transition: all 0.3s;
+}
+
+.tituloBusqueda {
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+    margin-top: 5px;
+}
+input[readonly] {
+    background-color: white !important;
+}
+.inputBusqueda {
+    border-radius: 0px;
+    height: 25px;
+}
+.limpiarFecha {
+    padding: 3px;
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent url(../../iconos/flechaDown.png) no-repeat 95% !important;
+    border: 1px solid #ccc;
+    border-radius: 0px !important;
+    height: 25px;
+    font-size: 11px !important;
+    padding: 4px 10px 6px 10px ;
+    width: 100%;
+    color: #4D4D4D !important;
+    background-size: 17px !important;
+    background-color: #FFFFFF !important;
+}
+.btn{
+    border-radius: 0;
+}
+
+.btn-purple{
+    background-color: #692535;
+    color: white;
+}
+
+.btn-purple:hover{
+    background-color: #541524;
+    color: white;
+}
+
+.btn-blue{
+    background-color: #213b87;
+    color:white;
+}
+
+.btn-blue:hover{
+    background-color: #132a6c;
+    color: white;
+}
+
+.btn-blue:focus{
+    color: white;
+}
+
+.btn-collapse {
+    width: 100%;
+    background-color: #ececec;
+    border-color: #c7c6c6;
+    color: black;
+    font-size: 11px;
+    text-align: left;
+    font-weight: bold;
+    color: #4d4d4d !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 25px;
+    padding: 0 12px;
+}
+.btn-collapse span {
+    margin: 0;
+}
+.btn-collapse img {
+    width: 20px;
+    height: 20px;
+}
+a img {
+    transition: .3s transform;
+}
+
+.panelCollapse {
+    background-color: #e8edf9;
+    border: 1px solid #c7c6c6;
+    border-top: 0px;
+}
+.btn-collapse:hover, .btn-collapse:focus{
+    background-color: #ececec !important;
+    border-color: #c7c6c6 !important;
+    color: initial !important;
+}
+.btn-collapse.sub {
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-top: 0 !important;
+}
+
+.titleCollapse.sub::before {
+    content: '- ';
+}
+.titleCollapse.sub {
+    margin-left: 6px;
+}
+
+#content{
+    background: #EDEDED;
+    width: 0;
+    z-index: 5;
+    position: fixed;
+    top: 50%;
+    left: 320px;
+    transition: .3s left;
+}
+
+#content.active{
+    left: 0;
+}
+
+#content button{
+    border-radius: 0% 30% 30% 0% !important;
+    padding: 0;
+    margin: 0;
+    background-color: #ececec;
+    border: 0;
+    width: 15px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-left: 1px;
+}
+
+#content button img{
+    width: 30px;
+    height: 30px;
+    margin-left: -9px;
+}
+
+a[aria-expanded="true"] img{
+    transform:          rotate(180deg);
+    -ms-transform:      rotate(180deg);
+    -moz-transform:     rotate(180deg);
+    -webkit-transform:  rotate(180deg);
+    -o-transform:       rotate(180deg);
+}
+
+.rotateImg{
+    transform:          rotate(180deg);
+    -ms-transform:      rotate(180deg);
+    -moz-transform:     rotate(180deg);
+    -webkit-transform:  rotate(180deg);
+    -o-transform:       rotate(180deg);
+}
+#sidebarCollapse img {
+    transition: .5s transform;
+} 
+.panelTabla {
+    padding: 0 30px 20px 30px;
+    width: 100%;
+    background: URL(../../iconos/Fondo.png) center center no-repeat;
+    background-size: 25%;
+}
+#msgDetalle {
+    background-color: #E1E6E8;
+    padding: 10px 25px;
+    display: flex;
+    align-items: center;
+}
+#imgInfo {
+    display: inline-block;
+    align-items: center;
+}
+#textoInfo {
+    color: #878786;
+    display: inline-block;
+    width: 100%;
+    margin-left: 20px;
+}
+#textoInfo h3 {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 18px;
+}
+#textoInfo p {
+    font-size: 12px;
+    margin-top: -10px;
+}
+.paddingDivT {
+    padding-top: 5px;
+    margin-left: -8px !important;
+    margin-top: 15px !important;
+
+}
+
+/*paginacion*/
+.paginateCenter {
+    display: flex;
+}
+
+.paginateTop {
+    margin-top: 12px;
+}
+
+.dataTables_paginate {
+    text-align: center !important;
+    display: inline-block;
+    margin-left: 10px !important;
+    font-size: 11px;
+}
+.paginate_button.active a {
+    color: #FFFFFF !important;
+    background-color: #213b87;
+}
+.paginate_button.active a:hover {
+    background-color: #132a6c;
+}
+.paginate_button.active a:focus {
+    background-color: #213b87;
+}
+.pagination li a {
+    border: none;
+    color: #4D4D4D !important;
+}
+.paginate_button.previous a, .paginate_button.next a {
+    text-decoration: underline;
+}
+
+.paginate_button a{
+    color: #4D4D4D !important;
+    padding: 3px 6px !important;
+}
+
+.dataTables_paginate{
+    margin: 0 auto !important;
+}
+
+.fondoGris {
+    background-color: #e1e6e8;
+    height: 30px;
+    margin-bottom: 14px;
+    color: #222221;
+}
+
+.fondoGrisAbajo {
+    background-color: #e1e6e8;
+    margin-top: 14px !important;
+    height: 30px;
+    color: #222221;
+}
+
+.paginateTop{
+    margin-top: 2px;
+}
+
+.lengthTop{
+    padding: 2px 20px;
+    text-align: right;
+}
+
+.lengthTop select{
+    background-color: #FFFFFF !important;
+}
+
+#tablaValidacionIdentidad {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    color: #4d4d4d;
+    border: 0px;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+    margin-top: 0px !important;
+    height: 100%;
+    padding: 15px 10px 13px;
+    background: #ececec;
+    border-radius: 10px;
+}
+#tablaValidacionIdentidad thead{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    vertical-align: middle;
+}
+#tablaValidacionIdentidad tr td, #tablaValidacionIdentidad tr th{
+    vertical-align: middle;
+    padding: 6px;
+
+}
+#tablaValidacionIdentidad thead tr th {
+    background-color: #213b87;
+    color: #FFFFFF;
+    font-size: 12px !important;
+    font-weight: normal;
+    line-height: 1.2;
+}
+#tablaValidacionIdentidad tbody{
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: auto;
+    max-height: 50vh;
+}
+#tablaValidacionIdentidad tbody tr{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+}   
+
+.img {
+    width: 18px;
+}
+
+.fw{
+    font-weight: 700;  
+}
+.table>tbody>tr>td{
+    border-top: 1px solid #ccc !important;
+}
+
+#cpOpcPDF {
+    visibility: hidden;
+    position: fixed;
+    border: 1px solid #d0d0d0;
+    bottom: 204px;
+    left: 320px;
+    z-index: 1;
+    background-color: #ececec;
+    padding: 5px;
+}
+
+.controlPDF {
+    margin-bottom: -16px !important;
+}
+.tablaInterna tbody {
+    display: table-row-group !important;
+    width: 100%;
+}
+
+.tablaInterna tr {
+    display: table-row !important;;
+}
+
+.col3 {
+    border: 1px solid #ccc;
+    border-bottom: 0px;
+    background: white;
+}
+
+.pd3 {
+    padding: 3px !important;
+}
+.wtd1{
+    width: 25%;
+}
+.wtd2{
+    width: 75%;
+}
+.colorRojo{
+    color: #692535;
+}

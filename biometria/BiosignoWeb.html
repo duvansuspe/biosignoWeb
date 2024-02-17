@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>SIGNO!</title>
+	<link type="image/x-icon" href="../../modulos/principal/favicon.ico" rel="shortcut icon" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+	<link rel="stylesheet" href="../../jquery/jquery.alerts.css">
+	<link rel="stylesheet" href="../../jquery/bootstrap-3.3.6-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../../jquery/DataTables-1.10.11/css/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="../../jquery/jquery-ui.css">
+	<link rel="stylesheet" href="../../modulos/principal/encabezado.css">
+	<link rel="stylesheet" href="../../jquery/OverlayScrollbars-master/css/OverlayScrollbars.min.css">
+	<link rel="stylesheet" href="../../modulos/biometria/BiosignoWeb.css">
+
+	<script type="text/javascript" src="../../jquery/jquery-1.12.1.min.js"></script>
+	<script type="text/javascript" src="../../modulos/facturacion/utilidadesjQuery.js"></script>
+	<script type="text/javascript" src="../../modulos/publico/JavaUtil.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.alerts.js"></script>
+	<script type="text/javascript" src="../../jquery/datatables.min.js"></script>
+	<script type="text/javascript" src="../../jquery/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../jquery/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../modulos/publico/funciones_consultas.js"></script>
+	<script type="text/javascript" src="../../jquery/aes/aes.js"></script>
+	<script type="text/javascript" src="../../jquery/OverlayScrollbars-master/js/jquery.overlayScrollbars.min.js"></script>
+	<script type="text/javascript" src="../../modulos/principal/seleccionar_impresoras.js"></script>
+	<script type="text/javascript" src="../../jquery/moment.min.js"></script>
+	<script type="text/javascript" src="../../jquery/countimer.js"></script>
+	<script type="text/javascript" src="../../modulos/biometria/BiosignoWeb.js"></script>
+	</head>
+
+<body id="bodyjQuery">
+	{include="encabezado"}
+	<div id="containerInterfaz" class="container-fluid">
+		<div class="enclogo paddingDivT paddingDivB msgDetalle" style="margin: 0;display: flex;justify-content: space-between;">
+			<div class="imgInfo" style="display: flex;align-items: center;">
+				<img title="logo" src="../../iconos/EncabezadoReporte.png" style="width: 80px;">
+				<input type="hidden" id="hideConsecutivo" name="hideConsecutivo" />
+				<div class="textoInfo">
+					<h3 class="titleH3"></h3>
+					<p id="textoInterfaz" class="text-justify">
+
+					</p>
+					</div>
+
+			</div>
+			<div class="containerCont divTmpValidador hidden">
+				<div class="circleInt tmpValidador">
+					<span class="tmpValidadorText"></span>
+				</div>
+			</div>
+			</div>
+		<div
+			style="background-color:#CDCDCD;padding: 3px 3px 3px 15px;color:#213b87;vertical-align: middle;font-weight:bold;font-size: 11px;text-align: center;display: flex;justify-content: space-between;align-items: center;">
+			<div class="contPasoAndCapture">
+				<span class=" textPaso">
+					Paso 1 de 2: Validación de identidad
+				</span>
+				<div class="contAlertCaptura">
+					<div class="flexInfoCapture">
+						<span class="spantextcapture"></span>
+						<div class="intCapturaDiv">
+							<div class="intSegundo">
+				
+								<div class="checkmark hidden"></div>
+								<div class="crossmark hidden"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="display: flex;justify-content: flex-end;grid-gap: 5px;align-items: center;">
+				<!--                    <div class="flexCenterAlign divTmpValidador hidden ">
+                                            <label>Temporizador para validacion identidad</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label class="tmpValidador"></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </div>-->
+				<div title="Ver lista de deos que se han verificado hoy" class=" hidden divImgFingersVerified cursorPoint">
+					<img src="./../../iconos/informacion.png" style="width:25px">
+				</div>
+				<button type="button" id="defDedosManu" class="btn btn-blue hidden">Configuracion</button>
+				<button type="button" id="defDedosManuSelect" class="btn btn-blue hidden">Definir Dedos</button>
+				
+				<button type="button" id="salir" class="btn btn-purple">Salir</button>
+				</div>
+				</div>
+				<div class="divPasosAlerta fontBgInt">
+					<div class="descripcionPasos" style="padding: 12px 12px 0px 6px;">
+
+			</div>
+			</div>
+			<div class="divpaso1">
+				<div class="col-lg-12 fontBgInt">
+					<div class="col-lg-6 pb10">
+						<div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT">
+							<span class="textWhite fontTitle">Datos registrados en SIGNO</span>
+						</div>
+						<div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg">
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div>
+									<span class=" fontTitle">Tipo de documento</span>
+									<select class="selectHeight mt5 borderGray" id="tiposDoc">
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Número de identificacion</span>
+									<div class="flex mt5">
+									<input type="text" id="identificacion" class="form-control imp w90 borderGray" placeholder="-- Ej: 1204578135 ---"
+										style="font-size: 12px">
+									<button id="buscar" class="btn btn-blue w10 ml5" style="padding: 0px;border-radius: 4px 4px 4px 4px !important;">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									</button>
+									<div class="infoClienteCargado hidden ml10">
+										<span class="identificacionClienteCargado hidden spanidentificacionValidate"></span>
+										<img src="../../iconos/basura.png" class="imgTrash cursorPoint" style="width:16px; height:16px">
+									</div>
+									</div>
+
+							</div>
+
+						</div>
+						</div>
+						<div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Nombres</span>
+									<div class="flex mt5 inputText borderGray inputBoxPad divvalnombreValidate">
+										<span class="nombreClienteCargado spannombreValidate "></span>
+									</div>
+
+							</div>
+							</div>
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Apellidos</span>
+									<div class="flex mt5 inputText borderGray inputBoxPad divvalapellidosValidate">
+										<span class="apellidoClienteCargado spanapellidosValidate "></span>
+									</div>
+
+							</div>
+							</div>
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Lugar de expedici&oacute;n</span>
+									<div class="flex mt5 inputText borderGray inputBoxPad divvalexpedicionValidate">
+										<span class="expedicionClienteCargado spanexpedicionValidate "></span>
+									</div>
+
+							</div>
+							</div>
+							</div>
+							<!--                        <div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                                        <div class="flexColumn">
+                                                            <span class=" fontTitle">Lugar de expedici&oacute;n</span>
+                                                            <div class="flex mt5 inputText borderGray inputBoxPad divvalexpedicionValidate">
+                                                                <span class="expedicionClienteCargado spanexpedicionValidate "></span>
+                                                            </div>
+                        
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+
+				</div>
+				<div class="col-lg-6 pb10 datPostApi hidden">
+					<div class="w100 h40 flexAlign bgSecondary pl16 borderRadiusT">
+						<span class="textGray fontTitle">Datos Obtenidos en Registraduria</span>
+					</div>
+					<div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">Tipo de documento</span>
+								<div class="flex mt5 inputText borderGray">
+									<span class="tipoDocObtain"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">N&uacute;mero de identificaci&oacute;n</span>
+								<div class="flex mt5  inputText borderGray dividentificacionValidate inputBoxPad">
+									<span class="ideObtain"></span>
+								</div>
+								<span class="spanValidateidentificacionValidate"></span>
+							</div>
+						</div>
+					</div>
+					<div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">Nombres</span>
+								<div class="flex mt5  inputText borderGray divnombreValidate inputBoxPad">
+									<span class="nombresObtain "></span>
+								</div>
+								<span class="spanValidatenombreValidate"></span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">Apellidos</span>
+								<div class="flex mt5  inputText borderGray divapellidosValidate inputBoxPad">
+									<span class="apellidosObtain "></span>
+								</div>
+								<span class="spanValidateapellidosValidate"></span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">Lugar de expedici&oacute;n</span>
+								<div class="flex mt5   inputText borderGray divexpedicionValidate inputBoxPad">
+									<span class="expedicionObtain"></span>
+								</div>
+								<span class="spanValidateexpedicionValidate"></span>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				</div>
+				<div class="col-lg-12 fontBgInt hidden fingerstd">
+					<div class="col-lg-6 pb10">
+						<div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT">
+							<span class="textWhite fontTitle">Toma de Huellas</span>
+						</div>
+						<div class="w100 flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class="fontTitle">Dedo 1</span>
+									<div class="  fingerstd hidden">
+										<div class="divSelectDedos">
+											<select class="selectHeight mt5 borderGray selectdedos hidden" finger="1"></select>
+											<img class="saveFinger cursorPoint hidden" finger="1" src="../../iconos/guardar.png"
+												style="width:16px;height:16px">
+											<div class="flex mt5  inputText borderGray inputBoxPad textFinger hidden" finger="1">
+												<span class="textFinger hidden" finger="1"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class="fontTitle">Dedo 2</span>
+									<div class="  fingerstd hidden">
+										<div class="divSelectDedos">
+											<select class="selectHeight mt5 borderGray selectdedos hidden" finger="2"></select>
+											<img class="saveFinger cursorPoint hidden" finger="2" src="../../iconos/guardar.png"
+												style="width:16px;height:16px">
+											<div class="flex mt5  inputText borderGray inputBoxPad textFinger hidden" finger="2">
+												<span class="textFinger hidden" finger="2"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 pb10 datPostApi hidden">
+						<div class="w100 h40 flexAlign bgSecondary pl16 borderRadiusT ">
+							<span class="textGray fontTitle">Score Toma de Huellas</span>
+						</div>
+						<div class="w100 flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class="fontTitle">Dedo 1</span>
+									<div class="flex mt5  inputText borderGray divdedosValidate inputBoxPad" finger="1">
+										<span class="dedo1Obtain"></span>
+									</div>
+									<span class="spanValidateDedo" finger="1"></span>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class="fontTitle">Dedo 2</span>
+									<div class="flex mt5  inputText borderGray divdedosValidate inputBoxPad" finger="2">
+										<span class="dedo2Obtain"></span>
+									</div>
+									<span class="spanValidateDedo" finger="2"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12 fontBgInt divAlertCaptura  hidden" id="iddivAlertCaptura">
+					<div class="col-lg-12 ">
+						<div class="w100 h40 flexAlign  fontBg pl16 borderRadiusTB ">
+							<label class="alertCaptura">Alerta:</label><label class="faltaCaptura"></label>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12 fontBgInt datPostApi hidden divNutTranVali">
+					<div class="col-lg-12 ">
+						<div class="w100 h40 flexAlign flexObtainNutTransa fontBg pl16 borderRadiusTB ">
+							<label class="">[Nut: <span class="nutObtain fwNormal"></span>]</label>
+							<label class="">[Identificador transacci&oacute;n: <span class="ideTransObtain fwNormal"></span>]</label>
+							<label class="">[Fecha validaci&oacute;n: <span class="fechaValObtain fwNormal"></span>]</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12 fontBgInt contenedorCaptura pt10 hidden borderRadiusB">
+					<div class="col-lg-12 pd0">
+						<div class="col-lg-4 pb10">
+							<div class="w100 h40 flexAlign bgPrimary pl16 borderRadiusT  divContenedorToma">
+								<span class="textWhite fontTitle">Fotografia</span>
+							</div>
+							<div class="w100 flexAlign flexAlignMedia flexColumn pl16 p5 fontBg borderRadiusB">
+								<div class="gridImgButton">
+									<div class="flexCenterAlign">
+										<img id="fotoImg" src="">
+									</div>
+									<div class="flexCenterAlign">
+										<button class="btn btn-blue activarCamara">Activar camara</button>
+									</div>
+									<div class="flexCenterAlign tomaFoto hidden">
+										<button class="btn btn-blue" id="tomarFoto">Tomar foto</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 pb10">
+							<div class="w100 h40 flexAlign bgPrimary pl16 borderRadiusT  divContenedorHuella" finger="1">
+								<span class="textWhite fontTitle">Dedo 1</span>
+							</div>
+							<div class="w100 flexAlign flexAlignMedia flexColumn pl16 p5 fontBg borderRadiusB">
+								<div class="gridImgButton">
+									<div class="flexCenterAlign">
+										<div class="">
+											<img id="imgDedo1" class="hidden" src="">
+										</div>
+									</div>
+									<div class="flexCenterAlign contBotonCaptura">
+										<button class="btn btn-blue capturaDedo hidden" finger="1">Iniciar Captura</button>
+									</div>
+									<div class="contInfoRta hidden" finger="1">
+										<div class="flexCenterAlign">
+											<span class="txtInfoResult">Serial lector: </span><span class="serialTxt" finger="1"></span>
+										</div>
+										<div class="flexCenterAlign">
+											<span class="txtInfoResult">IP: </span><span class="ipTxt" finger="1"></span>
+										</div>
+										<div class="flexCenterAlign">
+											<span class="txtInfoResult">MAC: </span><span class="macTxt" finger="1"></span>
+										</div>
+									</div>
+
+							</div>
+							</div>
+							</div>
+							<div class="col-lg-4 pb10">
+								<div class="w100 h40 flexAlign bgPrimary pl16 borderRadiusT  divContenedorHuella" finger="2">
+									<span class="textWhite fontTitle">Dedo 2</span>
+								</div>
+								<div class="w100 flexAlign flexAlignMedia flexColumn pl16 p5 fontBg borderRadiusB">
+									<div class="gridImgButton">
+										<div class="flexCenterAlign">
+											<div class="">
+												<img id="imgDedo2" class="hidden" src="">
+											</div>
+										</div>
+										<div class="flexCenterAlign contBotonCaptura">
+											<button class="btn btn-blue capturaDedo hidden" finger="2">Iniciar Captura</button>
+										</div>
+										<div class="contInfoRta hidden" finger="2">
+											<div class="flexCenterAlign">
+												<span class="txtInfoResult">Serial lector: </span><span class="serialTxt" finger="2"></span>
+											</div>
+											<div class="flexCenterAlign">
+												<span class="txtInfoResult">IP: </span><span class="ipTxt" finger="2"></span>
+											</div>
+											<div class="flexCenterAlign">
+												<span class="txtInfoResult">MAC: </span><span class="macTxt" finger="2"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+							</div>
+							<!--<div id="tablaequivalencia" class="">-->
+							<!--                    <table class="table table-bordered tableValidacion">
+                                        <thead>
+                                            <tr>
+                                                <th class="w20"></th>
+                                                <th class="w25">Datos registrados en SIGNO</th>
+                                                <th class="w40 hidden datPostApi">Datos obtenidos de registraduria</th>
+                                                <th class="w15 hidden datPostApi text-center">Validaci&oacute;n</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span>Identificaci&oacute;n</span>
+                                                </td>
+                                                <td>
+                                                    <div class="divDatSigno">
+                                                                                                <select id="tiposDoc">
+                                                                                                </select>
+                                                                                                <input type="text" id="identificacion" class="form-control imp" placeholder="-- Ej: 1204578135 ---" style="font-size: 12px">
+                                                                                                <button id="buscar" class="btn btn-blue" style="; padding: 2px 1px 2px 1px;">
+                                                                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                                                                </button>
+                
+                                                    </div>
+                                                    <div class="infoClienteCargado hidden">
+                                                        <span class="identificacionClienteCargado spanidentificacionValidate"></span>
+                                                        <img src="../../iconos/basura.png" class="imgTrash cursorPoint" style="width:16px; height:16px">
+                                                    </div>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <span class="ideObtain"></span>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <div class="dividentificacionValidate flexCenterAlign gridGap10"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Nombres</span>
+                                                </td>
+                                                <td>
+                                                    <div class="infoClienteCargado hidden">
+                                                        <span class="nombreClienteCargado spannombreValidate"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <span class="nombresObtain"></span>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <div class="divnombreValidate flexCenterAlign gridGap10"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Apellidos</td>
+                                                <td>
+                                                    <div class="infoClienteCargado hidden">
+                                                        <span class="apellidoClienteCargado spanapellidosValidate"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <span class="apellidosObtain"></span
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <div class="divapellidosValidate flexCenterAlign gridGap10"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Lugar expedición</td>
+                                                <td>
+                                                    <div class="infoClienteCargado hidden">
+                                                        <span class="expedicionClienteCargado spanexpedicionValidate"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <span class="expedicionObtain"></span>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <div class="divexpedicionValidate flexCenterAlign gridGap10"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fingerstd hidden">Dedo 1</td>
+                                                <td class="fingerstd hidden">
+                                                    <div class="divSelectDedos">
+                                                        <select class="selectdedos hidden" finger="1"></select>
+                                                        <img class="saveFinger cursorPoint hidden" finger="1" src="../../iconos/guardar.png" style="width:16px;height:16px">
+                                                        <span class="textFinger hidden" finger="1"></span>
+                                                    </div>  
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <span class="dedo1Obtain"></span>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <div class="divdedosValidate flexCenterAlign" finger="1"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fingerstd hidden">Dedo 2</td>
+                                                <td class="fingerstd hidden">
+                                                    <div class="divSelectDedos">
+                                                        <select class="selectdedos hidden" finger="2"></select>
+                                                        <img class="saveFinger cursorPoint hidden" finger="2" src="../../iconos/guardar.png" style="width:16px;height:16px">
+                                                        <span class="textFinger hidden" finger="2"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <span class="dedo2Obtain"></span>
+                                                </td>
+                                                <td class="hidden datPostApi">
+                                                    <div class="divdedosValidate flexCenterAlign" finger="2"></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="datPostApi hidden text-right">
+                                                <td colspan="2">
+                                                    NUT
+                                                </td>
+                                                <td colspan="2">
+                                                    <span class="nutObtain"></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="datPostApi hidden text-right">
+                                                <td colspan="2">
+                                                    Identificador transacción
+                                                </td>
+                                                <td colspan="2">
+                                                    <span class="ideTransObtain"></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="datPostApi hidden text-right">
+                                                <td colspan="2">
+                                                    Fecha validación
+                                                </td>
+                                                <td colspan="2">
+                                                    <span class="fechaValObtain"></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>-->
+			<!--</div>-->
+			<!--                <div class="divAlertCaptura  hidden alert alert-warning">
+                                    <label class="alertCaptura">Alerta:</label><label class="faltaCaptura"></label>
+                                </div>-->
+			<!--<div class="contenedorCaptura hidden">-->
+			<!--<table class="table table-bordered tableCaptura">-->
+			<!--                        <thead>
+                                            <tr>
+                                                <th class="w34 text-center">Fotografia</th>
+                                                <th class="w33 text-center">Dedo 1</th>
+                                                <th class="w33 text-center">Dedo 2</th>
+                                            </tr>
+                                        </thead>-->
+			<!--                        <tbody>
+                                            <tr>
+                                                <td>-->
+			<!--                                    <div class="gridImgButton">
+                                                        <div class="flexCenterAlign">
+                                                            <img id="fotoImg" src="">
+                                                        </div>
+                                                        <div class="flexCenterAlign">
+                                                            <button class="btn btn-blue activarCamara">Activar camara</button>
+                                                        </div>
+                                                        <div class="flexCenterAlign tomaFoto hidden">
+                                                            <button class="btn btn-blue" id="tomarFoto">Tomar foto</button>
+                                                        </div>
+                                                    </div>-->
+			<!--                                </td>
+                                                <td>-->
+			<!--                                    <div class="gridImgButton">
+                                                        <div class="flexCenterAlign divContenedorHuella" finger="1">
+                                                            <div class="whiteColor">
+                                                                <img id="imgDedo1" class="hidden" src="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="flexCenterAlign contBotonCaptura">
+                                                            <button class="btn btn-blue capturaDedo hidden" finger="1">Iniciar Captura</button>
+                                                        </div>
+                                                        <div class="contInfoRta hidden" finger="1">
+                                                            <div class="flexCenterAlign">
+                                                                <span class="txtInfoResult">Serial lector: </span><span class="serialTxt" finger="1"></span>
+                                                            </div>
+                                                            <div class="flexCenterAlign">
+                                                                <span class="txtInfoResult">IP: </span><span class="ipTxt" finger="1"></span>
+                                                            </div>
+                                                            <div class="flexCenterAlign">
+                                                                <span class="txtInfoResult">MAC: </span><span class="macTxt" finger="1"></span>
+                                                            </div>
+                                                        </div>
+                
+                                                    </div>-->
+			<!--                                </td>
+                                                <td>-->
+			<!--                                    <div class="gridImgButton">
+                                                        <div class="flexCenterAlign divContenedorHuella" finger="2">
+                                                            <div class="whiteColor">
+                                                                <img id="imgDedo2" class="hidden" src="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="flexCenterAlign contBotonCaptura">
+                                                            <button class="btn btn-blue capturaDedo hidden" finger="2">Iniciar Captura</button>
+                                                        </div>
+                                                        <div class="contInfoRta hidden" finger="2">
+                                                            <div class="flexCenterAlign">
+                                                                <span class="txtInfoResult">Serial lector: </span><span class="serialTxt" finger="2"></span>
+                                                            </div>
+                                                            <div class="flexCenterAlign">
+                                                                <span class="txtInfoResult">IP: </span><span class="ipTxt" finger="2"></span>
+                                                            </div>
+                                                            <div class="flexCenterAlign">
+                                                                <span class="txtInfoResult">MAC: </span><span class="macTxt" finger="2"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>-->
+			<!--                                </td>
+                                            </tr>
+										</tbody>A-->
+			<!--</table>-->
+			<!--</div>-->
+			</div>
+			<div class="divpaso2 hidden">
+				<div class="col-lg-12 fontBgInt borderRadiusB ">
+					<div class="col-lg-6 pb10">
+						<div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT">
+							<span class="textWhite fontTitle">Datos registrados en SIGNO</span>
+						</div>
+						<div class="w100   flexAlign flexAlignMedia pl16 pt10 pb10 fontBg">
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Tipo de documento</span>
+									<div class="flex mt5 inputText borderGray">
+										<span class="tipoDocpaso2"></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">N&uacute;mero de identificaci&oacute;n</span>
+									<div class="flex mt5 mb5 inputText borderGray inputBoxPad">
+										<span class="idepaso2"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Nombres</span>
+									<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+										<span class="nombrespaso2"></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Apellidos</span>
+									<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+										<span class="apellidopaso2"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg borderRadiusB">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Validacion Biometrica</span>
+									<div class="flex mt5 mb5 inputText borderGray  inputBoxPad validacionBio">
+									</div>
+								</div>
+							</div>
+
+					</div>
+					</div>
+					<div class="col-lg-6 pb10 ">
+						<div class="w100 h40 flexAlign bgSecondary pl16 borderRadiusT">
+							<span class="textGray fontTitle">Diligencia notarial</span>
+						</div>
+						<div class="w100   flexAlign flexAlignMedia pl16 pt10 pb10 fontBg borderRadiusB">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Tramite notarial</span>
+									<div class="flex mt5 mb5 ">
+										<select class="selectTramite"></select>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="flexColumn">
+									<span class=" fontTitle">Plantilla del servicio</span>
+									<div class="flex mt5 mb5 ">
+										<select class="selectPlantilla"></select>
+									</div>
+								</div>
+							</div>
+
+					</div>
+					</div>
+					<div class="col-lg-12 pb10 ">
+						<div class="plantillaInfoDiv hidden">
+							<div class="divPrevDoc">
+								<label>Previsualizaci&oacute;n del documento</label>
+							</div>
+							<div class="divBeforePlantilla">
+								<div class="plantillaTxtInfo">
+								</div>
+							</div>
+
+					</div>
+					</div>
+					</div>
+
+		</div>
+		</div>
+	<div class="modal fade" id="modalAsignationFingers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header msgDetalleModal header-modal">
+					<div class="imgInfo">
+						<img title="logo" src="../../iconos/Signo.png" style="width: 60px;">
+					</div>
+					<div class="textoInfoModal">
+						<h4 class="modal-title divResultmsjEncabezado" id="tituloModal"
+							style="font-size: 16px; font-weight: bold; line-height: 1.05;">Definir dedos manualmente
+						</h4>
+						<p>Esta acción esta auditada por favor escriba el motivo por el cual va a cambiar la asignación
+							aleatoria de dedo 1 y dedo 2</p>
+					</div>
+				</div>
+				<div class="modal-body fontModalBody">
+					<div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusTB">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<div class="flexAlignCenterColumn">
+								<span class="compar">Compareciente:</span><span class="clientDefinirDed"></span>
+							</div>
+						</div>
+					</div>
+					<div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT mt10">
+						<span class="textWhite fontTitle">Dedo 1</span>
+					</div>
+					<div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">Asignación aleatoria del sistema</span>
+								<div class="flex mt5 inputText borderGray inputBoxPad divvalnombreValidate">
+									<span class="dedoModalDefine" finger="1"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">Asignación manual del usuario</span>
+								<div class="flex mt5">
+									<select class="selectDedosDefine selectHeight  borderGray" finger="1">
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT mt10">
+						<span class="textWhite fontTitle">Dedo 2</span>
+					</div>
+					<div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg ">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">Asignación aleatoria del sistema</span>
+								<div class="flex mt5 inputText borderGray inputBoxPad divvalnombreValidate">
+									<span class="dedoModalDefine" finger="2"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class=" fontTitle">Asignación manual del usuario</span>
+								<div class="flex mt5">
+									<select class="selectDedosDefine selectHeight  borderGray" finger="2">
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<div class="flexColumn">
+								<span class="compar">Motivo del cambio</span>
+								<div class="flex mt5">
+									<textarea class="form-control motivoCambio selectHeight borderGray"></textarea>
+								</div>
+
+							</div>
+							
+							</div>
+							</div>
+							<div class="w100   flexAlign flexAlignMedia pl16 p5 flexObtainNutTransa ">
+								<button class="btn btn-blue registrarDefinirDedos">Registrar</button>
+								<button data-dismiss="modal" class="btn btn-purple">Salir</button>
+							</div>
+							</div>
+							</div>
+							</div>
+							</div>
+							<div class="modal fade" id="modalResultValidate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header msgDetalleModal header-modal">
+											<div class="imgInfo">
+												<img title="logo" src="../../iconos/Signo.png" style="width: 60px;">
+											</div>
+											<div class="textoInfoModal">
+						<h4 class="modal-title divResultmsjEncabezado" id="tituloModal"
+							style="font-size: 16px; font-weight: bold; line-height: 1.05;"></h4>
+						</div>
+						</div>
+						<div class="modal-body fontModalBody">
+							<div class="row">
+								<div class="col-lg-12 fontModalBody borderRadiusB ">
+									<div class="col-lg-6 pb10">
+										<div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT">
+											<span class="textWhite fontTitle">Datos registrados en SIGNO</span>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pt10 pb10 fontBg">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Identificaci&oacute;n</span>
+													<div class="flex mt5 mb5 inputText borderGray inputBoxPad">
+														<span class="divResultIdeSign"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Nombres</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultNomSign"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Apellidos</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultApellSign"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Lugar de expedicion</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultexpSign"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Dedo 1</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divContDedo1"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg borderRadiusB ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Dedo 2</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divContDedo2"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6 pb10">
+										<div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT">
+											<span class="textWhite fontTitle">Datos obtenidos de registraduría</span>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pt10 pb10 fontBg">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Identificaci&oacute;n</span>
+													<div class="flex mt5 mb5 inputText borderGray inputBoxPad">
+														<span class="divResultIde"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Nombres</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultNombre"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Apellidos</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultApellido"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Lugar de expedicion</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultExpedicion"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg ">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Dedo 1</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultDedo1"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg borderRadiusB">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Dedo 2</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultDedo1"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-12 pb10">
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 pt10 fontBg  borderRadiusT">
+											<div class="col-lg-4 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">NUT</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultNut"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Identificador Transacci&oacute;n</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultIdeTrans"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Fecha validacion</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultFechaVal"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="w100   flexAlign flexAlignMedia pl16 pb10 fontBg borderRadiusB">
+											<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Informaci&oacute;n Adicional</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultinfoAdic"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+												<div class="flexColumn">
+													<span class=" fontTitle">Usuario que tomo Huellas</span>
+													<div class="flex mt5 mb5 inputText borderGray  inputBoxPad">
+														<span class="divResultUser"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+		</div>
+
+	</div>
+	<div class="modal fade" id="modalTratamiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header msgDetalleModal header-modal">
+					<div class="imgInfo">
+						<img title="logo" src="../../iconos/Signo.png" style="width: 60px;">
+					</div>
+					<div class="textoInfoModal">
+						<h4 class="modal-title divResultmsjEncabezado" id="tituloModal"
+							style="font-size: 16px; font-weight: bold; line-height: 1.05;">Autorización de tratamiento
+							de datos personales</h4>
+						<p>Leer al compareciente el siguiente texto y solicitarle aceptar o rechazar el tratamiento de
+							datos personales</p>
+						</div>
+						</div>
+						<div class="modal-body fontModalBody p20">
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="tratamientoText borderRadiusTB">
+
+							</div>
+							</div>
+							</div>
+							</div>
+							<div class="w100   flexAlign flexAlignMedia pl16 p15 flexObtainNutTransa fontModalBody">
+								<button class="btn btn-blue acceptTerms">Aceptar</button>
+								<button class="btn btn-purple rejectTerms">Rechazar</button>
+							</div>
+							</div>
+							</div>
+							</div>
+	<div class="modal fade" id="modalDedosManu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header msgDetalleModal header-modal">
+					<div class="imgInfo">
+						<img title="logo" src="../../iconos/Signo.png" style="width: 60px;">
+					</div>
+					<div class="textoInfoModal">
+						<h4 class="modal-title divResultmsjEncabezado" id="tituloModal"
+							style="font-size: 16px; font-weight: bold; line-height: 1.05;">Definir que dedos no tiene el
+							ciudadano</h4>
+						<p>Esta acción esta auditada por favor escriba el motivo por el cual va a cambiar la asignación
+							aleatoria de dedo 1 y dedo 2</p>
+						</div>
+						</div>
+						<div class="modal-body fontModalBody">
+							<div class="w100   flexAlign flexAlignMedia pl16 p5  borderRadiusT whiteColor">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="flexBetweenDiv">
+										<div class="flexAlignCenterColumn alignItemsStart">
+											<span class="compar">Compareciente:</span><span class="clientDefinirDed"></span>
+										</div>
+										<div>
+											<button type="button" class="btn btn-purple" data-dismiss="modal">Cerrar</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="w100   flexAlign flexAlignMedia pl16 p5 whiteColor ">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-12 flex alignFlexEnd">
+							<div>
+								<label for="selectorDedos">Seleccione el dedo:</label>
+								<select name="selectorDedos" class="selectFingersDontHave">
+								</select>
+								</div>
+								<div>
+								<button style="padding: 0px;border-radius: 6.55px;width: 30px;height: 30px;"" class=" btn btn-blue ml5
+									addFingersDontHave">+</button>
+								</div>
+								</div>
+
+
+					</div>
+					<div class="w100   flexAlign flexAlignMedia pl16 p5 whiteColor borderRadiusB">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<table id="fingersTable" class="table table-bordered">
+								<thead class="bgPrimary textWhite">
+									<tr>
+										<th class="w10 text-center">Acciones</th>
+										<th class="w90">Dedo que no tiene el ciudadano</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- Aquí se agregarán las filas de elementos -->
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+					<!--                        <div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT mt10">
+                                                    <span class="textWhite fontTitle">Dedo 1</span>
+                                                </div>
+                                                <div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+                                                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                                        <div class="flexColumn">
+                                                            <span class=" fontTitle">Asignación aleatoria del sistema</span>
+                                                            <div class="flex mt5 inputText borderGray inputBoxPad divvalnombreValidate">
+                                                                <span class="dedoModalDefine" finger="1"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                                        <div class="flexColumn">
+                                                            <span class=" fontTitle">Asignación manual del usuario</span>
+                                                            <div class="flex mt5">
+                                                                <select class="selectDedosDefine selectHeight  borderGray" finger="1">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w100 h40 bgPrimary flexAlign pl16 borderRadiusT mt10">
+                                                    <span class="textWhite fontTitle">Dedo 2</span>
+                                                </div>
+                                                <div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg ">
+                                                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                                        <div class="flexColumn">
+                                                            <span class=" fontTitle">Asignación aleatoria del sistema</span>
+                                                            <div class="flex mt5 inputText borderGray inputBoxPad divvalnombreValidate">
+                                                                <span class="dedoModalDefine" finger="2"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                                        <div class="flexColumn">
+                                                            <span class=" fontTitle">Asignación manual del usuario</span>
+                                                            <div class="flex mt5">
+                                                                <select class="selectDedosDefine selectHeight  borderGray" finger="2">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w100   flexAlign flexAlignMedia pl16 p5 fontBg borderRadiusB">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                                        <div class="flexColumn">
+                                                            <span class="compar">Motivo del cambio</span>
+                                                            <div class="flex mt5">
+                                                                <textarea  class="form-control motivoCambio selectHeight borderGray"></textarea>
+                                                            </div>
+                        
+                                                        </div>
+                        
+                                                    </div>
+                                                </div>
+                                                <div class="w100   flexAlign flexAlignMedia pl16 p5 flexObtainNutTransa ">
+                                                    <button class="btn btn-blue registrarDefinirDedos">Registrar</button>
+                                                    <button  data-dismiss="modal" class="btn btn-purple">Salir</button>
+                                                </div>-->
+				</div>
+				</div>
+				</div>
+				</div>
+
+	<div class="modal fade" id="modalDedosVerified" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header msgDetalleModal header-modal">
+					<div class="imgInfo">
+						<img title="logo" src="../../iconos/Signo.png" style="width: 60px;">
+					</div>
+					<div class="textoInfoModal">
+						<h4 class="modal-title" style="font-size: 16px; font-weight: bold; line-height: 1.05;">Dedos ya
+							verificados el dia de hoy</h4>
+						</div>
+						</div>
+						<div class="modal-body fontModalBody">
+							<div class="w100   flexAlign flexAlignMedia pl16 p5  borderRadiusT whiteColor">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="flexBetweenDiv">
+										<div class="flexAlignCenterColumn alignItemsStart">
+											<span class="compar">Compareciente:</span><span class="clientDefinirDed"></span>
+										</div>
+										<div>
+											<button type="button" class="btn btn-purple" data-dismiss="modal">Cerrar</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="w100   flexAlign flexAlignMedia pl16 p5 whiteColor borderRadiusB">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+									<table id="fingersTableVerified" class="table table-bordered">
+										<thead class="bgPrimary textWhite">
+											<tr>
+												<th class="w90">Dedos ya verificados el dia de hoy</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						</div>
+						</div>
+						</div>
+
+</body>
+
+<div id="spinner" class="spinner">
+	<div style="position:fixed; padding-left: 40%; padding-top: 15%;">
+		<img class="spinner-img" src="../../iconos/LoadingSigno.webp" alt="Loading" />
+		<div id="textLoad" class="spinner-msg"></div>
+		</div>
+		</div>
+<div id="spinnerFinger" class="spinner">
+	<div style="" class="positionSpinnerFinger">
+		<img class="spinnerFinger-img" src="" alt="Loading" />
+		<div id="textLoadFinger" class="spinnerFinger-msg"></div>
+	</div>
+</div>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_kOqg0-Qx7FPdSrSTwA7H6vYMdsRXhCE&callback=initGeoCoder&libraries=&v=weekly"
+	async></script>
+
+</html>

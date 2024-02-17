@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!--/**
+* Description of ConsultaLiquidacionProtocolista
+*
+* @author jorge.suspe
+*/-->
+<html>
+    <head>
+        <title>SIGNO!</title>
+        <link type="image/x-icon" href="../../modulos/principal/favicon.ico" rel="shortcut icon" />
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../../jquery/jquery.alerts.css">
+        <link rel="stylesheet" href="../../jquery/bootstrap-3.3.6-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../jquery/DataTables-1.10.11/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../../jquery/jquery-ui.css">
+        <link rel="stylesheet" href="../../modulos/principal/encabezado.css" >
+        <link rel="stylesheet" href="../../modulos/biometria/ConsultaBiosignoWeb.css">
+        <link rel="stylesheet" href="../../jquery/OverlayScrollbars-master/css/OverlayScrollbars.min.css">
+        <link rel="stylesheet" href="../../jquery/bootstrap-select-1.9.4/dist/css/bootstrap-select.min.css">
+
+        <script type="text/javascript" src="../../jquery/jquery-1.12.1.min.js"></script>
+        <script type="text/javascript" src="../../modulos/facturacion/utilidadesjQuery.js"></script>
+        <script type="text/javascript" src="../../modulos/publico/JavaUtil.js"></script>
+        <script type="text/javascript" src="../../jquery/jquery.alerts.js"></script>
+        <script type="text/javascript" src="../../jquery/datatables.min.js"></script>
+        <script type="text/javascript" src="../../jquery/DataTables-1.10.11/js/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../jquery/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../jquery/bootstrap-select-1.9.4/dist/js/bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+        <script type="text/javascript" src="../../jquery/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+        <script type="text/javascript" src="../../modulos/publico/funciones_consultas.js"></script>
+        <script type="text/javascript" src="../../jquery/moment.min.js"></script>
+        <script type="text/javascript" src="../../jquery/es.js"></script>
+        <script type="text/javascript" src="../../jquery/bootstrap-3.3.6-dist/bootstrap-datetimepicker.min.js"></script>
+        <script type="text/javascript" src="../../jquery/Highcharts-5.0.0/js/highcharts.js"></script>
+        <script type="text/javascript" src="../../jquery/Highcharts-5.0.0/js/modules/exporting.js"></script>
+        <script type="text/javascript" src="../../jquery/html2canvas1.min.js"></script>
+        <script type="text/javascript" src="../../modulos/biometria/ConsultaBiosignoWeb.js"></script>
+    </head>
+    <body id="bodyjQuery" >
+        {include="encabezado"}
+        <form id='formContenedor' name='formContenedor' onsubmit="return false">
+            <div class="wrapper">
+                <nav id="sidebar">
+                    <!-- Sidebar Header -->
+                    <div class="sidebar-header">
+                        <h5 style="color: #ffffff; margin: 0 15px; padding-top: 10px; font-size: 12px;"><b>Filtros de búsqueda</b></h5>
+                        <hr style="margin: 0 15px">
+                    </div>
+                    <div class="scrollbar" id="sidebarContainer">
+                        <div style="margin: 0 15px;">
+                            <label class="tituloBusqueda">Fecha validación identidad</label>
+                            <hr style="margin: -5px 0 10px 0;background-color: black; height: 1px !important;">
+                            <div class="form-group">
+                                <span>Desde:</span>
+                                <div class='input-group'>
+                                    <span class="input-group-addon" style="cursor: pointer;padding: 4px 4px;background-color: #213b87;border-radius: 0;">
+                                        <img alt="calendario" src="../../iconos/calendario.png" style="width: 15px; height: 15px">
+                                    </span>
+
+                                    <input type="text" class="form-control inputBusqueda" id="fechaInicial" style="width: 90%" placeholder="--Seleccione una fecha--">
+                                    <span class="limpiarFecha">
+                                        <img title="Limpiar Fecha Inicial" src="../../iconos/basura.png" style="width:16px; height:16px; margin-top: 4px;">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span>Hasta:</span>
+                                <div class='input-group'>
+                                    <span class="input-group-addon" style="cursor: pointer;padding: 4px 4px;background-color: #213b87;border-radius: 0;">
+                                        <img alt="calendario" src="../../iconos/calendario.png" style="width: 15px; height: 15px">
+                                    </span>
+
+                                    <input type="text" class="form-control inputBusqueda" id="fechaFinal" style="width: 90%" placeholder="--Seleccione una fecha--">
+                                    <span class="limpiarFecha">
+                                        <img title="Limpiar Fecha Final" src="../../iconos/basura.png" style="width:16px; height:16px; margin-top: 4px;">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin: 0 15px 0 15px;">
+                            <label class="tituloBusqueda">Tipos de Documento</label>
+                            <hr style="margin: -5px 0 10px 0;background-color: black;height: 1px !important;">
+                            <div class="form-group">
+                                <select id="idPersona" class="inputBusqueda" style="width: 100%" >
+                                    <option value="0" selected>Seleccione</option>
+                                </select>
+                            </div>
+                            <div class="form-group oculto" id="divIde">
+                                <span>Identificaci&oacute;n</span>
+                                <input type="text" class="form-control inputBusqueda" oninput="validarCampos(this)" id="documento" placeholder="-- Valor numérico --" >
+                            </div>
+                            <div class="form-group oculto" id="divNom">
+                                <span>Nombre:</span>
+                                <input type="text" class="form-control inputBusqueda" oninput="validarCampos(this)" id="nombres" placeholder="--Espacio para texto--" >
+                            </div>
+                            <div class="form-group oculto" id="divApel">
+                                <span>Apellido</span>
+                                <input type="text" class="form-control inputBusqueda" oninput="validarCampos(this)" id="apellidos" placeholder="--Espacio para texto--" >
+                            </div>
+                        </div>
+                        <a class="btn btn-primary btn-collapse collapse" data-toggle="collapse" href="#panelAvanzadas" role="button" aria-expanded="false" aria-controls="panelAvanzadas" id="busquedaAvanzada">
+                            <span class="tituloBusqueda">Opciones Avanzadas</span>
+                            <input type="hidden" value="true" id="mostrarAvanzada">
+                            <img src="../../iconos/flechaDown.png" alt="flecha">
+                        </a>
+                        <div class="collapse panelCollapse" id="panelAvanzadas">
+                            <a class="btn btn-primary btn-collapse sub" data-toggle="collapse" href="#panelIdTransaccion" role="button" aria-expanded="false" aria-controls="panelIdTransaccion">
+                                <span class="titleCollapse tituloBusqueda sub"> Id Transacción</span>
+                                <img src="../../iconos/flechaDown.png" alt="flecha">
+                            </a>
+                            <div class="collapse panelCollapse" id="panelIdTransaccion">
+                                <div style="margin: 0 15px; padding-top: 10px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control heiCaja inputBusqueda" id="idTransaccion" oninput="validarCampos(this)" placeholder="--Valor alfanum&eacute;rico--" >
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary btn-collapse sub" data-toggle="collapse" href="#panelNut" role="button" aria-expanded="false" aria-controls="panelNut">
+                                <span class="titleCollapse tituloBusqueda sub"> Nut</span>
+                                <img src="../../iconos/flechaDown.png" alt="flecha">
+                            </a>
+                            <div class="collapse panelCollapse" id="panelNut">
+                                <div style="margin: 0 15px; padding-top: 10px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control heiCaja inputBusqueda" id="idNut" oninput="validarCampos(this)" placeholder="--Valor alfanum&eacute;rico--" >
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <a class="btn btn-primary btn-collapse sub" data-toggle="collapse" href="#panelDedo" role="button" aria-expanded="false" aria-controls="panelDedo">
+                                <span class="titleCollapse tituloBusqueda sub"> Dedo</span>
+                                <img src="../../iconos/flechaDown.png" alt="flecha">
+                            </a>
+                            <div class="collapse panelCollapse" id="panelDedo">
+                                <div style="margin: 0 15px 0 15px;">
+                                    <span>Lista de opciones:</span>
+                                    <hr style="margin: -5px 0 10px 0;background-color: black;height: 1px;">
+                                    <div class="form-group">
+                                        <select id="iddedo" style="width: 100%" class="form-control inputBusqueda">
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="validarDedos">
+                                        <span>Resultado validación dedo</span>
+                                        <select id="validacionDedo" style="width: 100%" class="inputBusqueda">
+                                            <option value="0" selected>Todos</option>
+                                            <option value="1">Exitoso</option>
+                                            <option value="2">Fallido</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary btn-collapse sub" data-toggle="collapse" href="#panelServicio" role="button" aria-expanded="false" aria-controls="panelServicio">
+                                <span class="titleCollapse tituloBusqueda sub"> Servicio</span>
+                                <img src="../../iconos/flechaDown.png" alt="flecha">
+                            </a>
+                            <div class="collapse panelCollapse" id="panelServicio">
+                                <div style="margin: 0 15px 0 15px;">
+                                    <span>Lista de opciones:</span>
+                                    <div class="form-group">
+                                        <select id="servicio" class="selectpicker" data-size="6" data-selected-text-format="count" data-live-search-normalize="true" data-actions-box="true" data-live-search="true" data-dropup-auto="false" multiple></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin: 39px 15px 0 15px; padding-bottom: 15px">
+                            <div class="row">
+                                <div class="col-xs-12" style="text-align: center">
+                                    <label style="margin-bottom: 14px;" class="tituloBusqueda text-center">Descargar Consulta en Formato</label>
+                                    <div class="col-xs-12" style="display: flex; justify-content: center; height: 25px;">
+                                        <span id="iCsv" style="margin-right: 10px;"></span>
+                                        <span id="iPdf" ></span>
+                                        <input type='hidden' id="nombre_script" name='nombre_script' value='{function="substr(basename(__FILE__),0,strpos(basename(__FILE__),"."))"}.html' >
+                                        <input type='hidden' id="newVersion" name='newVersion' value='1' >
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <button id="buscar" class="btn btn-blue btn-block" style="margin: 5px auto 15px auto; width: 60%;height: 30px;padding: 0 12px;">Buscar</button>
+                        <button id="salir" class="btn btn-purple btn-block" style="margin: 0 auto 15px auto; width: 60%;height: 30px;padding: 0 12px;">Salir</button>
+                    </div>
+                </nav>
+                <div id="content">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                        <img src="../../iconos/left.png" alt="flecha">
+                    </button>
+                </div>
+                <div class="panelTabla">
+                    <div id="msgDetalle">
+                        <div id="imgInfo">
+                            <img title="logo" src="../../iconos/EncabezadoConsultas.png" style="width: 70px;">
+                        </div>
+                        <div id="textoInfo">
+                            <h3>Consulta de validaciones de identidad Biosigno WEB</h3>
+                            <input id="securi" name="securi" type="hidden" />
+                            <p class="text-justify">Información de los servicios registrados con validación biométrica.</p>
+                        </div>
+                    </div>
+                    <div class="row paddingDivT" id="tablaRegistros" style="font-size: 11px;margin-top: 10px;">
+                        <div class ="col-md-12 text-center">
+                            <table id="tablaValidacionIdentidad" class="table-striped " width="100%" style="font-size: 11px;">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center text-capitalize" >Fecha validación identidad</th>
+                                        <th class="text-center text-capitalize" >Persona</th>
+                                        <th class="text-center text-capitalize" >Datos de la validación</th>
+                                        <th class="text-center text-capitalize" >Datos del servicio</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </body>
+    <div id="spinner" class="spinner">
+        <div style="position:fixed; padding-left: 40%; padding-top: 15%;">
+            <img  class="spinner-img" src="../../iconos/LoadingSigno.webp" alt="Loading"/>
+            <div id="textLoad" class="spinner-msg"></div>
+        </div>
+    </div>
+</html>
+
